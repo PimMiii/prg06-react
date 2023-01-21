@@ -30,16 +30,22 @@ export default function App() {
         setLibrary(data.items);
     };
 
+    const deleteItem = (target) => {
+        setLibrary(library.filter((item) => {
+    console.log(target)
+
+              return  library.indexOf(item) !== target.id
+            }
+        ))
+    };
+
     const showLibrary = library.map((item, index) => (
-        <Book book={item} key={index}/>
+        <Book book={item} key={index} id={index} deleteItem={deleteItem}/>
     ))
     useEffect(loadJson, [])
     return (
         <div className="container">
             <h1>Mijn PRG06 Bibliotheek</h1>
-            <div className="library">
-                {showLibrary}
-            </div>
             <div className="actions">
                 <button onClick={() => {
                     alert("you fucking nerd!")
@@ -48,8 +54,12 @@ export default function App() {
                 </button>
                 <button onClick={loadJson}>Load JSON</button>
                 <h4>JSON Books loaded: {loadedData.length}</h4>
-                <h4>{library.length}</h4>
+                <h4>Total Books: {library.length}</h4>
             </div>
+            <div className="library">
+                {showLibrary}
+            </div>
+
         </div>
     );
 }

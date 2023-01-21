@@ -15,9 +15,13 @@ export default function Book(props) {
         setBook({title: event.target.value})
     };
 
-    const deleteItem = () => {
-        return alert ("Dacht het niet èh vriend!")
-    };
+/*    const deleteItem = () => {
+        let index = props.key
+        console.log(index)
+        return alert ({index})
+
+
+    };*/
 
     return (
         <div className="Book">
@@ -30,10 +34,10 @@ export default function Book(props) {
             {book.year && <p>Jaar: {book.year}</p>}
             {book.series  && <p>Reeks: {book.series} #{book.number}</p>}
             </div>
-            <div className='buttons'>
+            <div className="buttons">
             <input onChange={inputHandler} type="text" value={book.title} />
             <button onClick={addLike}>Likes: {likes}</button>
-            <button onClick={deleteItem}>Verwijder Item</button>
+            <button onClick={() => props.deleteItem(props)}>Verwijder Item</button>
             </div>
         </div>
     );
