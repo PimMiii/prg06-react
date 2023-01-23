@@ -3,7 +3,7 @@ import {useState} from "react"
 import Book from "./Book";
 import "./style.css";
 
-export default function App() {
+export function App() {
 
     const [library, setLibrary] = useState([])
     const [loadedData, setLoadedData] = useState([])
