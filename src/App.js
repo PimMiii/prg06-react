@@ -43,7 +43,7 @@ export function App() {
             <Routes>
                 <Route path="/" element={<Layout loadLibrary={loadLibrary} loadedData={loadedData} library={library}/>}>
                     <Route index element={<Books library={library} libraryRefreshHandler={loadLibrary}/>} />
-                    <Route path="create" element={<NewBook libraryRefreshHandler={loadLibrary} />} />
+                    <Route path="create" element={<NewBook />} />
                     <Route path="books/:id" element={<BookDetails />} />
 
                     <Route path="*" element={<Error />} />

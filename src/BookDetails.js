@@ -31,7 +31,7 @@ export default function BookDetails(props) {
 
     useEffect(loadBook, []);
 
-/*    const deleteBook = () => {
+    const deleteBook = () => {
         fetch(book._links.self.href,
             {
                 method: 'DELETE',
@@ -41,9 +41,8 @@ export default function BookDetails(props) {
             }
         )
             .then((response) => console.log(`deleted ${book.title}`))
-            .then((response) => {props.libraryRefreshHandler()} )
             .catch((error) => console.error(error));
-    };*/
+    };
 
     return (
         <div className="Book Details">
@@ -58,7 +57,7 @@ export default function BookDetails(props) {
             </div>
             <div className="buttons">
                 <button>Aanpassen</button>
-                {/*<button onClick={deleteBook}>Verwijderen</button>*/}
+                <button onClick={deleteBook}>Verwijderen</button>
             </div>
         </div>
     );

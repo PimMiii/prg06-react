@@ -108,12 +108,6 @@ nav li:hover{
 .Book:nth-child(odd) {
     border-radius: 50px 5px 10px 5px;
 }
-.Book:nth-child(2) {
-    border-radius: 50px 5px 10px 5px;
-}
-.Book:last-child {
-    border-radius: 5px 50px 5px 10px;
-}
 
 .Book .buttons {
     display: flex;
@@ -192,4 +186,12 @@ button:hover {
 
 .Error h4 {
     text-decoration: line-through solid red 4px;
+}
+
+.success h2 {
+    color: green;
+    background: rgba(0, 0, 0, 0.25);
+    width:25%;
+    padding-inline: 1rem;
+    border-radius: 5px;
 }
