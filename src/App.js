@@ -1,16 +1,22 @@
 import React, {useEffect} from "react";
 import {useState} from "react"
-import Book from "./Book";
+import Books from "./Books";
+import {NewBook} from "./NewBook";
 import "./style.css";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Layout from "./Layout";
+import Error from "./Error";
+import BookDetails from "./BookDetails";
 
 export function App() {
 
     const [library, setLibrary] = useState([])
     const [loadedData, setLoadedData] = useState([])
+    const URI_COLLECTION = 'http://145.24.222.119:8000/books'
 
 
-    const loadJson = () => {
-        fetch('http://145.24.222.119:8000/books',
+    const loadLibrary = () => {
+        fetch(URI_COLLECTION,
             {
                 method: 'GET',
                 headers: {
@@ -30,36 +36,19 @@ export function App() {
         setLibrary(data.items);
     };
 
-    const deleteItem = (target) => {
-        setLibrary(library.filter((item) => {
-    console.log(target)
+    useEffect(loadLibrary, [])
 
-              return  library.indexOf(item) !== target.id
-            }
-        ))
-    };
-
-    const showLibrary = library.map((item, index) => (
-        <Book book={item} key={index} id={index} deleteItem={deleteItem}/>
-    ))
-    useEffect(loadJson, [])
     return (
-        <div className="container">
-            <h1>Mijn PRG06 Bibliotheek</h1>
-            <div className="actions">
-                <button onClick={() => {
-                    alert("you fucking nerd!")
-                    setLibrary([...library, {title: "NERD ALERT"}])
-                }}>Add a Book
-                </button>
-                <button onClick={loadJson}>Load JSON</button>
-                <h4>JSON Books loaded: {loadedData.length}</h4>
-                <h4>Total Books: {library.length}</h4>
-            </div>
-            <div className="library">
-                {showLibrary}
-            </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout loadLibrary={loadLibrary} loadedData={loadedData} library={library}/>}>
+                    <Route index element={<Books library={library} libraryRefreshHandler={loadLibrary}/>} />
+                    <Route path="create" element={<NewBook libraryRefreshHandler={loadLibrary} />} />
+                    <Route path="books/:id" element={<BookDetails />} />
 
-        </div>
+                    <Route path="*" element={<Error />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }

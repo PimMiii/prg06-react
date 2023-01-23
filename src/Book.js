@@ -1,12 +1,12 @@
 import React from "react";
-import { useState } from "react";
-import "./style.css";
+import {useState} from "react";
+import {Link} from "react-router-dom";
 
 export default function Book(props) {
     const [likes, setLikes] = useState(0);
 
     const addLike = () => {
-        setLikes((value) => value+1);
+        setLikes((value) => value + 1);
     };
 
     const [book, setBook] = useState(props.book);
@@ -15,29 +15,40 @@ export default function Book(props) {
         setBook({title: event.target.value})
     };
 
-/*    const deleteItem = () => {
-        let index = props.key
-        console.log(index)
-        return alert ({index})
-
-
-    };*/
+    const deleteBook = () => {
+        fetch(props.book._links.self.href,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }
+        )
+            .then((response) => console.log(`deleted ${props.book.title}`))
+            .then((response) => {
+                props.libraryRefreshHandler()
+            })
+            .catch((error) => console.error(error));
+    };
 
     return (
         <div className="Book">
             <div className="titles">
-            <h2>{book.title}</h2>
-            {book.title_nl && <h3>{book.title_nl}</h3>}
+                {book.title_nl && <h2>{book.title}</h2>}
+                {book.title_nl && <h3>{book.title_nl}</h3>}
             </div>
             <div className="information">
-            {book.author && <h3>Auteur: {book.author}</h3>}
-            {book.year && <p>Jaar: {book.year}</p>}
-            {book.series  && <p>Reeks: {book.series} #{book.number}</p>}
+                {book.author && <h4>Auteur: {book.author}</h4>}
             </div>
             <div className="buttons">
-            <input onChange={inputHandler} type="text" value={book.title} />
-            <button onClick={addLike}>Likes: {likes}</button>
-            <button onClick={() => props.deleteItem(props)}>Verwijder Item</button>
+                <Link to={`/books/${props.book.id}`}>
+                    <button>Details weergeven</button>
+                </Link>
+                <button onClick={addLike}>Likes: {likes}</button>
+
+                <Link to={`/books/edit/${props.book.id}`}><button>Aanpassen</button></Link>
+                <button onClick={deleteBook}>Verwijderen</button>
+
             </div>
         </div>
     );
