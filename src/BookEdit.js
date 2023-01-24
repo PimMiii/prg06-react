@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 
 export default function NewBook(props) {
+
+    const params = useParams();
     const [book, setBook] = useState({
         title: "",
         title_nl: "",
@@ -12,8 +14,7 @@ export default function NewBook(props) {
         number: "",
         year: ""
     });
-
-    const [addedData, setAddedData] = useState(null)
+    const [savedBook, setSavedBook] = useState(null);
 
     const inputHandler = (event) => {
         setBook({
@@ -22,17 +23,14 @@ export default function NewBook(props) {
         })
     };
 
-    const saveBook = (event) => {
-        event.preventDefault();
-
-        fetch(props.BASE_URI,
+    const loadBook = () => {
+        fetch(`${props.BASE_URI}/${params.id}`,
             {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Accept': 'application/json',
                     'Content-type': 'application/json'
-                },
-                body: JSON.stringify(book)
+                }
             }
         )
             .then((response) => response.json())
@@ -42,16 +40,42 @@ export default function NewBook(props) {
 
     const dataWasLoaded = (data) => {
         console.log(data);
-        setAddedData(data);
-
+        setBook(data);
     };
+
+    const saveBook = (event) => {
+        event.preventDefault();
+
+        fetch(`${props.BASE_URI}/${params.id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json'
+                }, body : JSON.stringify(book)
+            }
+        )
+            .then((response) => response.json())
+            .then((data) => dataWasSaved(data))
+            .catch((error) => console.error(error));
+    };
+
+    const dataWasSaved = (data) => {
+        console.log(data);
+        setSavedBook(data);
+    };
+
+    useEffect(loadBook, []);
 
     return (
         <>
-            <div className="Book newBook">
+            <div className="Book Details">
                 <div className="titles">
-                    <h2>Nieuw Boek aanmaken</h2>
+                    <h2>Boek Aanpassen</h2>
                 </div>
+                {savedBook && <div className="success">
+                    <h2>Aanpassingen opgeslagen!</h2>
+                </div>}
                 <div className="forms">
                     <form>
                         <label htmlFor="title"> Titel (Originele taal): </label>
@@ -72,27 +96,12 @@ export default function NewBook(props) {
                     <Link to='/'>
                         <button>Terug naar Bibliotheek</button>
                     </Link>
-                    <button onClick={saveBook}>Voeg nieuw boek toe</button>
+                    {book && <Link to={`/books/${book._id}`}>
+                        <button>Terug naar Detailweergave</button>
+                    </Link>}
+                    <button onClick={saveBook}>Opslaan</button>
                 </div>
             </div>
-            {addedData && <div className="Book Details">
-                <div className="success">
-                    <h2>Boek toegevoegd!</h2>
-                </div>
-                <div className="titles">
-                    {addedData && <h2>{addedData.title}</h2>}
-                    {addedData && <h3>{addedData.title_nl}</h3>}
-                </div>
-                <div className="information">
-                    {addedData && <h3>Auteur: {addedData.author}</h3>}
-                    {addedData && <p>Jaar: {addedData.year}</p>}
-                    {addedData && <p>Reeks: {addedData.series} #{addedData.number}</p>}
-                </div>
-                <div className="buttons">
-                    <Link to={`../books/edit/${addedData._id}`}><button>Aanpassen</button></Link>
-                    <Link to={`../books/${addedData._id}`}><button>Weergeven</button></Link>
-                </div>
-            </div>}
-        </>
+                    </>
     );
 }

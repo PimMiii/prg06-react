@@ -6,6 +6,7 @@ import NewBook from "./NewBook";
 import Layout from "./Layout";
 import Error from "./Error";
 import BookDetails from "./BookDetails";
+import BookEdit from "./BookEdit"
 
 import "./style.css";
 
@@ -20,7 +21,7 @@ export function App() {
                     <Route index element={<Books BASE_URI={URI_COLLECTION}/>} />
                     <Route path="create" element={<NewBook BASE_URI={URI_COLLECTION}/>} />
                     <Route path="books/:id" element={<BookDetails BASE_URI={URI_COLLECTION} />} />
-                    <Route path="books/edit/:id" element={<BookDetails BASE_URI={URI_COLLECTION}/>} /> {/*TODO: Edit to EDIT page*/}
+                    <Route path="books/edit/:id" element={<BookEdit BASE_URI={URI_COLLECTION}/>} />
                     {/*path for 404 page not found errors*/}
                     <Route path="*" element={<Error />} />
                 </Route>

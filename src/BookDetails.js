@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import { useState } from "react";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 export default function BookDetails(props) {
     const params = useParams()
@@ -55,7 +55,12 @@ export default function BookDetails(props) {
                 {book && <p>Reeks: {book.series} #{book.number}</p>}
             </div>
             <div className="buttons">
-                <button>Aanpassen</button>
+                <Link to='/'>
+                    <button>Terug naar Bibliotheek</button>
+                </Link>
+                {book &&<Link to={`/books/edit/${book._id}`}>
+                    <button>Aanpassen</button>
+                </Link> }
                 <button onClick={deleteBook}>Verwijderen</button>
             </div>
         </div>

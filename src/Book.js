@@ -3,11 +3,6 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 
 export default function Book(props) {
-    const [likes, setLikes] = useState(0);
-
-    const addLike = () => {
-        setLikes((value) => value + 1);
-    };
 
     const [book, setBook] = useState(props.book);
 
@@ -44,9 +39,9 @@ export default function Book(props) {
                 <Link to={`/books/${props.book.id}`}>
                     <button>Details weergeven</button>
                 </Link>
-                <button onClick={addLike}>Likes: {likes}</button>
-
-                <Link to={`/books/edit/${props.book.id}`}><button>Aanpassen</button></Link>
+                <Link to={`/books/edit/${props.book.id}`}>
+                    <button>Aanpassen</button>
+                </Link>
                 <button onClick={deleteBook}>Verwijderen</button>
 
             </div>
