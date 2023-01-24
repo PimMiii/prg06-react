@@ -4,13 +4,12 @@ import {useParams} from "react-router-dom";
 
 export default function BookDetails(props) {
     const params = useParams()
-    const URI_COLLECTION = 'http://145.24.222.119:8000/books'
 
     const [book, setBook] = useState(null);
 
 
     const loadBook = () => {
-        fetch(`${URI_COLLECTION}/${params.id}`,
+        fetch(`${props.BASE_URI}/${params.id}`,
             {
                 method: 'GET',
                 headers: {

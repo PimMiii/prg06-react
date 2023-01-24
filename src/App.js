@@ -1,51 +1,27 @@
-import React, {useEffect} from "react";
-import {useState} from "react"
-import Books from "./Books";
-import {NewBook} from "./NewBook";
-import "./style.css";
+import React from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+
+import Books from "./Books";
+import NewBook from "./NewBook";
 import Layout from "./Layout";
 import Error from "./Error";
 import BookDetails from "./BookDetails";
 
+import "./style.css";
+
 export function App() {
 
-    const [library, setLibrary] = useState([])
-    const [loadedData, setLoadedData] = useState([])
     const URI_COLLECTION = 'http://145.24.222.119:8000/books'
-
-
-    const loadLibrary = () => {
-        fetch(URI_COLLECTION,
-            {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json'
-                }
-            }
-        )
-            .then((response) => response.json())
-            .then((data) => dataWasLoaded(data))
-            .catch((error) => console.error(error));
-    };
-
-
-    const dataWasLoaded = (data) => {
-        console.log(data.items);
-        setLoadedData(data.items);
-        setLibrary(data.items);
-    };
-
-    useEffect(loadLibrary, [])
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Layout loadLibrary={loadLibrary} loadedData={loadedData} library={library}/>}>
-                    <Route index element={<Books library={library} libraryRefreshHandler={loadLibrary}/>} />
-                    <Route path="create" element={<NewBook />} />
-                    <Route path="books/:id" element={<BookDetails />} />
-
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Books BASE_URI={URI_COLLECTION}/>} />
+                    <Route path="create" element={<NewBook BASE_URI={URI_COLLECTION}/>} />
+                    <Route path="books/:id" element={<BookDetails BASE_URI={URI_COLLECTION} />} />
+                    <Route path="books/edit/:id" element={<BookDetails BASE_URI={URI_COLLECTION}/>} /> {/*TODO: Edit to EDIT page*/}
+                    {/*path for 404 page not found errors*/}
                     <Route path="*" element={<Error />} />
                 </Route>
             </Routes>

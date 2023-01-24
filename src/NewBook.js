@@ -2,9 +2,8 @@ import React from "react";
 import {useState} from "react";
 import {Link} from "react-router-dom";
 
-const URI_COLLECTION = 'http://145.24.222.119:8000/books'
 
-export function NewBook(props) {
+export default function NewBook(props) {
     const [book, setBook] = useState({
         title: "",
         title_nl: "",
@@ -26,7 +25,7 @@ export function NewBook(props) {
     const saveBook = (event) => {
         event.preventDefault();
 
-        fetch(URI_COLLECTION,
+        fetch(props.BASE_URI,
             {
                 method: 'POST',
                 headers: {
@@ -65,7 +64,7 @@ export function NewBook(props) {
                         <input type="text" name="series" id="series" value={book.series} onChange={inputHandler}/>
                         <label htmlFor="number"> Nummer in reeks: </label>
                         <input type="text" name="number" id="number" value={book.number} onChange={inputHandler}/>
-                        <label htmlFor="yearr"> Jaar: </label>
+                        <label htmlFor="year"> Jaar: </label>
                         <input type="text" name="year" id="year" value={book.year} onChange={inputHandler}/>
                     </form>
                 </div>
