@@ -11,7 +11,7 @@ import "./style.css";
 
 export function App() {
 
-    const URI_COLLECTION = 'http://145.24.222.119:8000/books'
+    const URI_COLLECTION = 'http://145.24.222.119:8000/books'; {/*TODO: implement SSL for https -> so Github Pages can work*/}
 
     return (
         <BrowserRouter>
