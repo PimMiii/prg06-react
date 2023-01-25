@@ -29,8 +29,14 @@ export default function Book(props) {
     return (
         <div className="Book">
             <div className="titles">
+            <div>
                 {book.title_nl && <h2>{book.title}</h2>}
                 {book.title_nl && <h3>{book.title_nl}</h3>}
+            </div>
+                {props.status &&
+                    <div className="success">
+                        <h2>Boek toegevoegd!</h2>
+                    </div>}
             </div>
             <div className="information">
                 {book.author && <h4>Auteur: {book.author}</h4>}
@@ -43,7 +49,6 @@ export default function Book(props) {
                     <button>Aanpassen</button>
                 </Link>
                 <button onClick={deleteBook}>Verwijderen</button>
-
             </div>
         </div>
     );

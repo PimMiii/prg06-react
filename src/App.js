@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+
+import {URIContext} from "./contexts/URIContext";
 
 import Books from "./Books";
 import NewBook from "./NewBook";
@@ -12,20 +14,24 @@ import "./style.css";
 
 export function App() {
 
-    const URI_COLLECTION = 'http://145.24.222.119:8000/books'; {/*TODO: implement SSL for https -> so Github Pages can work*/}
+
+    const BASE_URI = useContext(URIContext); {/*TODO: implement SSL for https -> so Github Pages can work*/}
 
     return (
         <BrowserRouter>
+            <URIContext.Provider value={BASE_URI}>
             <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<Books BASE_URI={URI_COLLECTION}/>} />
-                    <Route path="create" element={<NewBook BASE_URI={URI_COLLECTION}/>} />
-                    <Route path="books/:id" element={<BookDetails BASE_URI={URI_COLLECTION} />} />
-                    <Route path="books/edit/:id" element={<BookEdit BASE_URI={URI_COLLECTION}/>} />
-                    {/*path for 404 page not found errors*/}
-                    <Route path="*" element={<Error />} />
-                </Route>
+                    <Route path="/" element={<Layout/>}>
+                        <Route index element={<Books />}/>
+                        <Route path="create" element={<NewBook/>}/>
+                        <Route path="books/:id" element={<BookDetails/>}/>
+                        <Route path="books/edit/:id" element={<BookEdit/>}/>
+
+                        {/*path for 404 page not found errors*/}
+                        <Route path="*" element={<Error/>}/>
+                    </Route>
             </Routes>
+        </URIContext.Provider>
         </BrowserRouter>
     );
 }

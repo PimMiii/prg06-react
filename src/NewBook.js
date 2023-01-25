@@ -1,9 +1,13 @@
-import React from "react";
-import {useState} from "react";
+import React, {Fragment, useContext, useState} from "react";
 import {Link} from "react-router-dom";
+import {URIContext} from "./contexts/URIContext";
+import Book from "./Book";
+import PropTypes from "prop-types";
 
 
 export default function NewBook(props) {
+    const BASE_URI = useContext(URIContext)
+
     const [book, setBook] = useState({
         title: "",
         title_nl: "",
@@ -25,7 +29,7 @@ export default function NewBook(props) {
     const saveBook = (event) => {
         event.preventDefault();
 
-        fetch(props.BASE_URI,
+        fetch(BASE_URI,
             {
                 method: 'POST',
                 headers: {
@@ -47,7 +51,7 @@ export default function NewBook(props) {
     };
 
     return (
-        <>
+        <Fragment>
             <div className="Book newBook">
                 <div className="titles">
                     <h2>Nieuw Boek aanmaken</h2>
@@ -75,7 +79,13 @@ export default function NewBook(props) {
                     <button onClick={saveBook}>Voeg nieuw boek toe</button>
                 </div>
             </div>
-            {addedData && <div className="Book Details">
+            {addedData && <Book
+                book={addedData}
+                key={addedData._id}
+                id={addedData._id}
+                status={'added'}
+                libraryRefreshHandler={props.libraryRefreshHandler}/>}
+            {/*{addedData && <div className="Book Details">
                 <div className="success">
                     <h2>Boek toegevoegd!</h2>
                 </div>
@@ -92,7 +102,7 @@ export default function NewBook(props) {
                     <Link to={`../books/edit/${addedData._id}`}><button>Aanpassen</button></Link>
                     <Link to={`../books/${addedData._id}`}><button>Weergeven</button></Link>
                 </div>
-            </div>}
-        </>
+            </div>}*/}
+        </Fragment>
     );
 }

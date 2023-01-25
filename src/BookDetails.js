@@ -1,15 +1,16 @@
-import React, {useEffect} from "react";
-import { useState } from "react";
+import React, {useState, useContext, useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
+import {URIContext} from "./contexts/URIContext";
 
 export default function BookDetails(props) {
     const params = useParams()
+    const BASE_URI = useContext(URIContext)
 
     const [book, setBook] = useState(null);
 
 
     const loadBook = () => {
-        fetch(`${props.BASE_URI}/${params.id}`,
+        fetch(`${BASE_URI}/${params.id}`,
             {
                 method: 'GET',
                 headers: {

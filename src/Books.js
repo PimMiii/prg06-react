@@ -1,12 +1,22 @@
 import Book from "./Book";
-import React, {useEffect, useState} from "react";
-
+import React, {useContext, useEffect, useState} from "react";
+import {URIContext} from "./contexts/URIContext";
+import Pagination from "./Pagination";
 
 export default function Books(props) {
+    const BASE_URI = useContext(URIContext)
+
     const [library, setLibrary] = useState([])
     const [loadedData, setLoadedData] = useState([])
+    const [limits, setLimits] = useState({
+        start: '1',
+        limit: '6'
+    })
+    const [uri, setUri] = useState(`${BASE_URI}?start=${limits.start}&limit=${limits.limit}`)
+    const [pagination, setPagination] = useState(null)
+
     const loadLibrary = () => {
-        fetch(props.BASE_URI,
+        fetch(uri,
             {
                 method: 'GET',
                 headers: {
@@ -24,17 +34,22 @@ export default function Books(props) {
         console.log(data.items);
         setLoadedData(data.items);
         setLibrary(data.items);
+        setPagination(data.pagination)
     };
 
-    useEffect(loadLibrary, [])
+    useEffect(loadLibrary, [uri])
 
     const showLibrary = library.map((item, index) => (
         <Book book={item} key={item.id} libraryRefreshHandler={loadLibrary}/>
     ))
 
     return (
-        <div className="library">
-            {showLibrary}
-        </div>
+        <>
+            <div className="library">
+                {showLibrary}
+            </div>
+            {pagination &&
+            <Pagination pagination={pagination} setUri={setUri} libraryRefreshHandler={loadLibrary}/> }
+        </>
     )
 }
