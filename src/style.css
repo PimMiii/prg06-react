@@ -61,6 +61,13 @@ nav li:hover{
     text-shadow:rgba(176, 38, 255) 5px 2px 25px;
 }
 
+div.Loading {
+    color: green;
+    position: absolute;
+    top: 20vh;
+    left: 45vw;
+}
+
 
 .actions {
     background-image: linear-gradient(33deg, rgba(176, 38, 255,0.75), rgba(38, 255, 237,0.75));

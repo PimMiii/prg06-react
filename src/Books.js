@@ -1,9 +1,9 @@
 import Book from "./Book";
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {URIContext} from "./contexts/URIContext";
 import Pagination from "./Pagination";
 
-export default function Books(props) {
+export default function Books() {
     const BASE_URI = useContext(URIContext)
 
     const [library, setLibrary] = useState([])
@@ -39,7 +39,7 @@ export default function Books(props) {
 
     useEffect(loadLibrary, [uri])
 
-    const showLibrary = library.map((item, index) => (
+    const showLibrary = library.map((item) => (
         <Book book={item} key={item.id} libraryRefreshHandler={loadLibrary}/>
     ))
 
