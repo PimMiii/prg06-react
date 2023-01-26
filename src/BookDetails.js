@@ -1,8 +1,8 @@
-import React, {useState, useContext, useEffect, Fragment} from "react";
+import {useState, useContext, useEffect, Fragment} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {URIContext} from "./contexts/URIContext";
 
-export default function BookDetails(props) {
+export default function BookDetails() {
     const params = useParams()
     const BASE_URI = useContext(URIContext)
 
@@ -42,36 +42,36 @@ export default function BookDetails(props) {
             }
         )
             .then((response) => console.log(`deleted ${book.title}`))
-            .then((response) => navigate("/") )
+            .then((response) => navigate("/"))
             .catch((error) => console.error(error));
     };
 
     return (
         <Fragment>
-        {book &&
-        <div className="Book Details">
-            <div className="titles">
-                <div>
-                 <h2>{book.title}</h2>
-                <h3>{book.title_nl}</h3>
+            {book &&
+                <div className="Book Details">
+                    <div className="titles">
+                        <div>
+                            <h2>{book.title}</h2>
+                            <h3>{book.title_nl}</h3>
+                        </div>
+                    </div>
+                    <div className="information">
+                        <h3>Auteur: {book.author}</h3>
+                        <p>Jaar: {book.year}</p>
+                        <p>Reeks: {book.series} #{book.number}</p>
+                    </div>
+                    <div className="buttons">
+                        <Link to='/'>
+                            <button>Terug naar Bibliotheek</button>
+                        </Link>
+                        <Link to={`/books/edit/${book._id}`}>
+                            <button>Aanpassen</button>
+                        </Link>
+                        <button onClick={deleteBook}>Verwijderen</button>
+                    </div>
                 </div>
-            </div>
-            <div className="information">
-                <h3>Auteur: {book.author}</h3>
-                <p>Jaar: {book.year}</p>
-                <p>Reeks: {book.series} #{book.number}</p>
-            </div>
-            <div className="buttons">
-                <Link to='/'>
-                    <button>Terug naar Bibliotheek</button>
-                </Link>
-                <Link to={`/books/edit/${book._id}`}>
-                    <button>Aanpassen</button>
-                </Link>
-                <button onClick={deleteBook}>Verwijderen</button>
-            </div>
-        </div>
-        }
+            }
             {!book &&
                 <div className="Book Details">
                     <div className="titles">

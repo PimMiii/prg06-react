@@ -1,13 +1,14 @@
-import Book from "./Book";
-import React, { useContext, useEffect, useState } from "react";
+import {useContext, useEffect, useState} from "react";
+
 import {URIContext} from "./contexts/URIContext";
+
 import Pagination from "./Pagination";
+import Book from "./Book";
 
 export default function Books() {
     const BASE_URI = useContext(URIContext)
 
     const [library, setLibrary] = useState([])
-    const [loadedData, setLoadedData] = useState([])
     const [limits, setLimits] = useState({
         start: '1',
         limit: '6'
@@ -32,7 +33,6 @@ export default function Books() {
 
     const dataWasLoaded = (data) => {
         console.log(data.items);
-        setLoadedData(data.items);
         setLibrary(data.items);
         setPagination(data.pagination)
     };
@@ -49,7 +49,7 @@ export default function Books() {
                 {showLibrary}
             </div>
             {pagination &&
-            <Pagination pagination={pagination} setUri={setUri} libraryRefreshHandler={loadLibrary}/> }
+                <Pagination pagination={pagination} setUri={setUri} libraryRefreshHandler={loadLibrary}/>}
         </>
     )
 }

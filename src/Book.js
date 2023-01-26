@@ -1,19 +1,14 @@
-import React from "react";
 import {useState} from "react";
 import {Link} from "react-router-dom";
 
 export default function Book(props) {
 
     let className = "Book"
-    if(props.status) {
+    if (props.status) {
         className = "Book Success"
     }
 
     const [book, setBook] = useState(props.book);
-
-    const inputHandler = (event) => {
-        setBook({title: event.target.value})
-    };
 
     const deleteBook = () => {
         fetch(props.book._links.self.href,
@@ -34,10 +29,10 @@ export default function Book(props) {
     return (
         <div className={`${className}`}>
             <div className="titles">
-            <div>
-                {book.title_nl && <h2>{book.title}</h2>}
-                {book.title_nl && <h3>{book.title_nl}</h3>}
-            </div>
+                <div>
+                    {book.title_nl && <h2>{book.title}</h2>}
+                    {book.title_nl && <h3>{book.title_nl}</h3>}
+                </div>
                 {props.status &&
                     <div className="success">
                         <h2>Boek toegevoegd!</h2>

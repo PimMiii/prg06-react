@@ -1,4 +1,4 @@
-import React, {Fragment, useContext, useState} from "react";
+import {Fragment, useContext, useState} from "react";
 import {Link} from "react-router-dom";
 import {URIContext} from "./contexts/URIContext";
 import Book from "./Book";
@@ -80,11 +80,11 @@ export default function NewBook(props) {
             </div>
             {addedData &&
                 <Book
-                book={addedData}
-                key={addedData._id}
-                id={addedData._id}
-                status={'added'}
-                libraryRefreshHandler={props.libraryRefreshHandler}
+                    book={addedData}
+                    key={addedData._id}
+                    id={addedData._id}
+                    status={'added'}
+                    libraryRefreshHandler={props.libraryRefreshHandler}
                 />}
 
         </Fragment>

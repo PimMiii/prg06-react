@@ -1,9 +1,9 @@
-import React, {useState, useContext, useEffect} from "react";
+import {useState, useContext, useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
 import {URIContext} from "./contexts/URIContext";
 
 
-export default function NewBook(props) {
+export default function NewBook() {
 
     const params = useParams();
     const BASE_URI = useContext(URIContext)
@@ -73,11 +73,11 @@ export default function NewBook(props) {
         <div className="Book Details Edit">
             <div className="titles">
                 <div>
-                <h2>Boek Aanpassen</h2>
-            </div>
-            {savedBook && <div className="success">
-                <h2>Aanpassingen opgeslagen!</h2>
-            </div>}
+                    <h2>Boek Aanpassen</h2>
+                </div>
+                {savedBook && <div className="success">
+                    <h2>Aanpassingen opgeslagen!</h2>
+                </div>}
             </div>
             <div className="forms">
                 <form>
