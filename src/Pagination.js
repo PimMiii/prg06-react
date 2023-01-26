@@ -1,12 +1,8 @@
-import React, {useState, useContext, useEffect} from "react";
-import {Link, useParams} from "react-router-dom";
-import {URIContext} from "./contexts/URIContext";
+import React from "react";
 
 
 export default function Pagination(props) {
 
-    /*const params = useParams();*/
-    const BASE_URI = useContext(URIContext)
     const pagination = props.pagination
 
     return (

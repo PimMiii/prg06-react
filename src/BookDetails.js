@@ -1,5 +1,5 @@
-import React, {useState, useContext, useEffect} from "react";
-import {Link, useParams} from "react-router-dom";
+import React, {useState, useContext, useEffect, Fragment} from "react";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {URIContext} from "./contexts/URIContext";
 
 export default function BookDetails(props) {
@@ -7,6 +7,7 @@ export default function BookDetails(props) {
     const BASE_URI = useContext(URIContext)
 
     const [book, setBook] = useState(null);
+    const navigate = useNavigate();
 
 
     const loadBook = () => {
@@ -41,29 +42,53 @@ export default function BookDetails(props) {
             }
         )
             .then((response) => console.log(`deleted ${book.title}`))
+            .then((response) => navigate("/") )
             .catch((error) => console.error(error));
     };
 
     return (
+        <Fragment>
+        {book &&
         <div className="Book Details">
             <div className="titles">
-                {book && <h2>{book.title}</h2>}
-                {book && <h3>{book.title_nl}</h3>}
+                <div>
+                 <h2>{book.title}</h2>
+                <h3>{book.title_nl}</h3>
+                </div>
             </div>
             <div className="information">
-                {book && <h3>Auteur: {book.author}</h3>}
-                {book && <p>Jaar: {book.year}</p>}
-                {book && <p>Reeks: {book.series} #{book.number}</p>}
+                <h3>Auteur: {book.author}</h3>
+                <p>Jaar: {book.year}</p>
+                <p>Reeks: {book.series} #{book.number}</p>
             </div>
             <div className="buttons">
                 <Link to='/'>
                     <button>Terug naar Bibliotheek</button>
                 </Link>
-                {book &&<Link to={`/books/edit/${book._id}`}>
+                <Link to={`/books/edit/${book._id}`}>
                     <button>Aanpassen</button>
-                </Link> }
+                </Link>
                 <button onClick={deleteBook}>Verwijderen</button>
             </div>
         </div>
+        }
+            {!book &&
+                <div className="Book Details">
+                    <div className="titles">
+                        <div>
+                            <h2>Boek niet gevonden.</h2>
+                            <h3>Book not found</h3>
+                        </div>
+                    </div>
+                    <div className="information">
+                    </div>
+                    <div className="buttons">
+                        <Link to='/'>
+                            <button>Terug naar Bibliotheek</button>
+                        </Link>
+                    </div>
+                </div>
+            }
+        </Fragment>
     );
 }

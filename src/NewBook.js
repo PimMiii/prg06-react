@@ -2,7 +2,6 @@ import React, {Fragment, useContext, useState} from "react";
 import {Link} from "react-router-dom";
 import {URIContext} from "./contexts/URIContext";
 import Book from "./Book";
-import PropTypes from "prop-types";
 
 
 export default function NewBook(props) {
@@ -73,36 +72,21 @@ export default function NewBook(props) {
                     </form>
                 </div>
                 <div className="buttons">
+                    <button onClick={saveBook}>Opslaan</button>
                     <Link to='/'>
                         <button>Terug naar Bibliotheek</button>
                     </Link>
-                    <button onClick={saveBook}>Voeg nieuw boek toe</button>
                 </div>
             </div>
-            {addedData && <Book
+            {addedData &&
+                <Book
                 book={addedData}
                 key={addedData._id}
                 id={addedData._id}
                 status={'added'}
-                libraryRefreshHandler={props.libraryRefreshHandler}/>}
-            {/*{addedData && <div className="Book Details">
-                <div className="success">
-                    <h2>Boek toegevoegd!</h2>
-                </div>
-                <div className="titles">
-                    {addedData && <h2>{addedData.title}</h2>}
-                    {addedData && <h3>{addedData.title_nl}</h3>}
-                </div>
-                <div className="information">
-                    {addedData && <h3>Auteur: {addedData.author}</h3>}
-                    {addedData && <p>Jaar: {addedData.year}</p>}
-                    {addedData && <p>Reeks: {addedData.series} #{addedData.number}</p>}
-                </div>
-                <div className="buttons">
-                    <Link to={`../books/edit/${addedData._id}`}><button>Aanpassen</button></Link>
-                    <Link to={`../books/${addedData._id}`}><button>Weergeven</button></Link>
-                </div>
-            </div>}*/}
+                libraryRefreshHandler={props.libraryRefreshHandler}
+                />}
+
         </Fragment>
     );
 }

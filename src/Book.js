@@ -4,6 +4,11 @@ import {Link} from "react-router-dom";
 
 export default function Book(props) {
 
+    let className = "Book"
+    if(props.status) {
+        className = "Book Success"
+    }
+
     const [book, setBook] = useState(props.book);
 
     const inputHandler = (event) => {
@@ -27,7 +32,7 @@ export default function Book(props) {
     };
 
     return (
-        <div className="Book">
+        <div className={`${className}`}>
             <div className="titles">
             <div>
                 {book.title_nl && <h2>{book.title}</h2>}

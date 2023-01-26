@@ -96,13 +96,14 @@ export default function NewBook(props) {
                 </form>
             </div>
             <div className="buttons">
-                <Link to='/'>
-                    <button>Terug naar Bibliotheek</button>
-                </Link>
+                <button onClick={saveBook}>Opslaan</button>
                 {book && <Link to={`/books/${book._id}`}>
                     <button>Terug naar Detailweergave</button>
                 </Link>}
-                <button onClick={saveBook}>Opslaan</button>
+                <Link to='/'>
+                    <button>Terug naar Bibliotheek</button>
+                </Link>
+
             </div>
         </div>
     );
