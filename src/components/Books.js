@@ -1,6 +1,6 @@
 import {useContext, useEffect, useState} from "react";
 
-import {URIContext} from "./contexts/URIContext";
+import {URIContext} from "../contexts/URIContext";
 
 import Pagination from "./Pagination";
 import Book from "./Book";

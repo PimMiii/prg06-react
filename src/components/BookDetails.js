@@ -1,6 +1,6 @@
 import {useState, useContext, useEffect, Fragment} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
-import {URIContext} from "./contexts/URIContext";
+import {URIContext} from "../contexts/URIContext";
 
 export default function BookDetails() {
     const params = useParams()

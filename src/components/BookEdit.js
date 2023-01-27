@@ -1,6 +1,6 @@
 import {useState, useContext, useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
-import {URIContext} from "./contexts/URIContext";
+import {URIContext} from "../contexts/URIContext";
 
 
 export default function NewBook() {

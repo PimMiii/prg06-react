@@ -3,18 +3,18 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import {URIContext} from "./contexts/URIContext";
 
-import Layout from "./Layout";
+import Layout from "./components/Layout";
 
 import "./style.css";
 
 export function App() {
 
     const BASE_URI = useContext(URIContext);
-    const Books = lazy(() => import('./Books'))
-    const NewBook = lazy(() => import('./NewBook'))
-    const BookDetails = lazy(() => import('./BookDetails'))
-    const BookEdit = lazy(() => import('./BookEdit'))
-    const Error = lazy(() => import('./Error'))
+    const Books = lazy(() => import('./components/Books'))
+    const NewBook = lazy(() => import('./components/NewBook'))
+    const BookDetails = lazy(() => import('./components/BookDetails'))
+    const BookEdit = lazy(() => import('./components/BookEdit'))
+    const Error = lazy(() => import('./components/Error'))
 
     return (
         <BrowserRouter>
